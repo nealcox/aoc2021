@@ -57,9 +57,11 @@ def get_re(s):
 example = """\
 X"""
 
+example_answer = X
+
 
 def test_example():
-    assert calculate(example) == X
+    assert calculate(example) == example_answer
 
 
 if __name__ == "__main__":
