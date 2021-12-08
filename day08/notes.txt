@@ -1,0 +1,41 @@
+  0:      1:      2:      3:      4:
+ aaaa    ....    aaaa    aaaa    ....
+b    c  .    c  .    c  .    c  b    c
+b    c  .    c  .    c  .    c  b    c
+ ....    ....    dddd    dddd    dddd
+e    f  .    f  e    .  .    f  .    f
+e    f  .    f  e    .  .    f  .    f
+ gggg    ....    gggg    gggg    ....
+
+  5:      6:      7:      8:      9:
+ aaaa    aaaa    aaaa    aaaa    aaaa
+b    .  b    .  .    c  b    c  b    c
+b    .  b    .  .    c  b    c  b    c
+ dddd    dddd    ....    dddd    dddd
+.    f  e    f  .    f  e    f  .    f
+.    f  e    f  .    f  e    f  .    f
+ gggg    gggg    ....    gggg    gggg
+
+ 
+ 
+ acedgfb cdfbe gcdfa fbcad dab cefabd cdfgeb eafb cagedb ab |
+cdfeb fcadb cdfeb cdbaf
+ dddd
+e    a
+e    a
+ ffff
+g    b
+g    b
+ cccc
+
+ unique lit : 1,4,7,8
+ 7 lit:8 unique
+ 6 lit:0,6,9  9-> has all of 4
+              0-> has all of 1
+              6-> last one with 6 lit
+ 5 lit:2,3,5  3-> has all of 1
+              5-> has 3 of 4
+              2-> last one with 5 lit
+ 4 lit:4
+ 3 lit:7
+ 2 lit:1
