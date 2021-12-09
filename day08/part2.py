@@ -23,7 +23,7 @@ def calculate(input_text):
 
 def solve(line):
     val = 0
-    outs, ins = line
+    ins, outs = line
     to_solve = ins[:]
     solved = {}
     num_to_s = {}
@@ -146,14 +146,11 @@ def solve(line):
 def parselines(s):
     given = []
     for line in s.split("\n"):
-        line = line.strip()
-        words = line.split()
-        for i, word in enumerate(words):
-            words[i] = "".join(sorted(word))
-        line = " ".join(words)
-        parts = line.split(" | ")
+        parts = " ".join(
+                    [ "".join(sorted(word)) for word in line.split() ]
+                    ).split(" | ")
 
-        given.append([parts[1].split(), parts[0].split()])
+        given.append([parts[0].split(), parts[1].split()])
     return given
 
 
