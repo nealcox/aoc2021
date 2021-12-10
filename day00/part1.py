@@ -26,9 +26,10 @@ def calculate(input_text):
 def parse(s):
     given = None
     # given = partlines(s)
-    #given = get_one_int_per_line(s)
+    # given = get_one_int_per_line(s)
     # given = get_re(s)
-    given = get_all_ints(s)
+    # given = get_all_ints(s)
+    given = get_map(s)  # given is tuple (area_map, height, width)
     return given
 
 
@@ -38,6 +39,24 @@ def partlines(s):
         line = line.strip()
         given.append(line)
     return given
+
+
+def get_map(s):
+    area = defaultdict(lambda: float("inf"))
+
+    height = 0
+    width = 0
+
+    for r,row in enumerate(s.split("\n")):
+        if r > height:
+            height = r
+        for c,char in enumerate(row):
+            area[r,c] = char
+            if c > width:
+                width = c
+    given = (area, height, width)
+    return given
+
 
 
 def get_one_int_per_line(s):
