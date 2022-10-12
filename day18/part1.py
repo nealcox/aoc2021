@@ -22,7 +22,7 @@ def calculate(input_text):
 
     answer = []
     in_lines = input_text.splitlines()
-    for i,line in enumerate(in_lines):
+    for i, line in enumerate(in_lines):
         print(f"{i:3}:{line}")
         sf = parse_sf(line)
         # print(f"    {sf}")
@@ -31,9 +31,8 @@ def calculate(input_text):
         if not answer:
             answer = sf
         else:
-            answer = ['['] + answer + sf + [']']
+            answer = ["["] + answer + sf + ["]"]
         answer = reduce_sf(answer[:])
-        
 
     mag = magnitude(answer)
 
@@ -46,9 +45,9 @@ def magnitude(sf):
     depth = 0
     idx = 0
     while True:
-        if sf[idx] == '[':
+        if sf[idx] == "[":
             depth += 1
-        elif sf[idx] == ']':
+        elif sf[idx] == "]":
             depth -= 1
             if depth == 0:
                 # Got to end, simple snailfish number
@@ -57,14 +56,10 @@ def magnitude(sf):
                 return 3 * left + 2 * right
             if depth == 1:
                 # Found end of complex snailfish number
-                left, right = sf[1:idx + 1], sf[idx + 1: -1]
+                left, right = sf[1 : idx + 1], sf[idx + 1 : -1]
                 print(f"{sf} -> {left} , {right}")
-                return 3* magnitude(left) + 2 * magnitude(right)
+                return 3 * magnitude(left) + 2 * magnitude(right)
         idx += 1
-                
-    
-
-
 
 
 def parse_sf(s):
@@ -98,23 +93,25 @@ def reduce_sf(sf):
             if depth == 5:
                 changed = True
                 explode_done = True
-                left , right = sf[i+1], sf[i+2]
-                #breakpoint()
+                left, right = sf[i + 1], sf[i + 2]
+                # breakpoint()
 
                 prev_num_idx = i - 1
-                while prev_num_idx > 0 and not(isinstance(sf[prev_num_idx],int)):
+                while prev_num_idx > 0 and not (isinstance(sf[prev_num_idx], int)):
                     prev_num_idx -= 1
                 if prev_num_idx > 0:
                     sf[prev_num_idx] += left
 
                 next_num_idx = i + 4
-                while next_num_idx < len(sf) and not(isinstance(sf[next_num_idx], int)):
+                while next_num_idx < len(sf) and not (
+                    isinstance(sf[next_num_idx], int)
+                ):
                     next_num_idx += 1
-                if next_num_idx < len(sf) :
+                if next_num_idx < len(sf):
                     sf[next_num_idx] += right
 
                 new_left_sf = sf[:i]
-                new_right_sf = sf[i+4:]
+                new_right_sf = sf[i + 4 :]
                 # print(f"New left : {new_left_sf} \nNew right: {new_right_sf}")
                 sf = new_left_sf + [0] + new_right_sf
                 depth -= 1
@@ -123,26 +120,27 @@ def reduce_sf(sf):
     # Split
     split_done = False
     i = 0
-    while i < len(sf) and not(split_done):
+    while i < len(sf) and not (split_done):
         if isinstance(sf[i], int):
-            if sf[i] >9:
+            if sf[i] > 9:
                 split_done = True
                 left = sf[i] // 2
-                right = (sf[i] + 1 ) // 2
-                mid = [ "[", left, right, "]" ]
-                sf = sf[:i] + mid + sf[i+1:]
+                right = (sf[i] + 1) // 2
+                mid = ["[", left, right, "]"]
+                sf = sf[:i] + mid + sf[i + 1 :]
         i += 1
     if split_done:
         sf = reduce_sf(sf)
     # print(f"Reduced to  {c for c in sf}")
     return sf
 
-        
+
 def test_reduce1():
     ex1 = parse_sf("[[[[[9,8],1],2],3],4]")
     ans1 = parse_sf("[[[[0,9],2],3],4]")
 
     assert reduce_sf(ex1) == ans1
+
 
 def test_reduce2():
     ex2 = parse_sf("[7,[6,[5,[4,[3,2]]]]]")
@@ -150,17 +148,20 @@ def test_reduce2():
 
     assert reduce_sf(ex2) == ans2
 
+
 def test_reduce3():
     ex3 = parse_sf("[[6,[5,[4,[3,2]]]],1]")
     ans3 = parse_sf("[[6,[5,[7,0]]],3]")
 
     assert reduce_sf(ex3) == ans3
 
+
 def test_reduce4():
     ex4 = parse_sf("[[3,[2,[1,[7,3]]]],[6,[5,[4,[3,2]]]]]")
     ans4 = parse_sf("[[3,[2,[8,0]]],[9,[5,[7,0]]]]")
 
     assert reduce_sf(ex4) == ans4
+
 
 def test_reduce5():
     ex5 = parse_sf("[[[[[4,3],4],4],[7,[[8,4],9]]],[1,1]]")
@@ -170,43 +171,45 @@ def test_reduce5():
 
 
 def test_magnitude1():
-    ex1 =  parse_sf("[[1,2],[[3,4],5]]")
-    ans1 =  143
+    ex1 = parse_sf("[[1,2],[[3,4],5]]")
+    ans1 = 143
 
     assert magnitude(ex1) == ans1
 
+
 def test_magnitude2():
-    ex2 =  parse_sf("[[[[0,7],4],[[7,8],[6,0]]],[8,1]]")
-    ans2 =  1384
+    ex2 = parse_sf("[[[[0,7],4],[[7,8],[6,0]]],[8,1]]")
+    ans2 = 1384
 
     assert magnitude(ex2) == ans2
 
 
 def test_magnitude3():
-    ex3 =  parse_sf("[[[[1,1],[2,2]],[3,3]],[4,4]]")
-    ans3 =  445
+    ex3 = parse_sf("[[[[1,1],[2,2]],[3,3]],[4,4]]")
+    ans3 = 445
 
     assert magnitude(ex3) == ans3
 
 
 def test_magnitude4():
-    ex4 =  parse_sf("[[[[3,0],[5,3]],[4,4]],[5,5]]")
-    ans4 =  791
+    ex4 = parse_sf("[[[[3,0],[5,3]],[4,4]],[5,5]]")
+    ans4 = 791
 
     assert magnitude(ex4) == ans4
 
+
 def test_magnitude5():
-    ex5 =  parse_sf("[[[[5,0],[7,4]],[5,5]],[6,6]]")
-    ans5 =  1137
+    ex5 = parse_sf("[[[[5,0],[7,4]],[5,5]],[6,6]]")
+    ans5 = 1137
 
     assert magnitude(ex5) == ans5
 
+
 def test_magnitude6():
-    ex6 =  parse_sf("[[[[8,7],[7,7]],[[8,6],[7,7]]],[[[0,7],[6,6]],[8,7]]]")
-    ans6 =  3488
+    ex6 = parse_sf("[[[[8,7],[7,7]],[[8,6],[7,7]]],[[[0,7],[6,6]],[8,7]]]")
+    ans6 = 3488
 
     assert magnitude(ex6) == ans6
-
 
 
 example = """\
@@ -223,7 +226,7 @@ example = """\
 """
 
 example_answer = 4140
-#example_answer = parse_sf("[[[[6,6],[7,6]],[[7,7],[7,0]]],[[[7,7],[7,7]],[[7,8],[9,9]]]]")
+# example_answer = parse_sf("[[[[6,6],[7,6]],[[7,7],[7,0]]],[[[7,7],[7,7]],[[7,8],[9,9]]]]")
 
 
 def test_example():
