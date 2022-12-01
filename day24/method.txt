@@ -1,0 +1,10 @@
+separated the long program into the 14 parts
+two types:
+ - multiply by 26 & the "if" comparing w to x+n cannot be true as n > 10
+ - divide by 26 and we can finagle the inputs
+
+operates as a stack so w7 must reverse w6 and leave z7 equal to z5
+in this way, at the end, the value of z will be that before we start: ie 0
+
+just sort of trial and error, start with all 9s for maximum and all 1s for minumum
+then by hand when there's a divide play with the numbers of w to make it fit
